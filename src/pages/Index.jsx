@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Switch } from "@/components/ui/switch"
-import { Label } from "@/components/ui/label"
 import Select from 'react-select';
 import { toast } from "sonner"
 
@@ -10,8 +8,6 @@ const Index = () => {
   const [countryCode, setCountryCode] = useState({ value: '+49', label: '🇩🇪 +49' });
   const [phoneNumber, setPhoneNumber] = useState('');
   const [response, setResponse] = useState(null);
-  const [useTemplate, setUseTemplate] = useState(false);
-  const [useAssistant, setUseAssistant] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -122,24 +118,6 @@ const Index = () => {
                 placeholder="Enter phone number"
                 required
               />
-            </div>
-          </div>
-          <div className="flex justify-between items-center space-x-4 mt-4">
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="template"
-                checked={useTemplate}
-                onCheckedChange={setUseTemplate}
-              />
-              <Label htmlFor="template">Template</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="assistant"
-                checked={useAssistant}
-                onCheckedChange={setUseAssistant}
-              />
-              <Label htmlFor="assistant">Assistant</Label>
             </div>
           </div>
           <Button type="submit" className="w-full mt-4">Submit</Button>
