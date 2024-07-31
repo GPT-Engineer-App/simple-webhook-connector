@@ -25,11 +25,11 @@ const Index = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen">
-      <div className="w-full max-w-md p-6 space-y-6">
-        <h1 className="text-2xl font-bold text-center mb-2">Phone Number Validator</h1>
-        <p className="text-sm text-gray-600 text-center mb-6">
-          Enter a phone number to check its validity and get detailed information about it.
+    <div className="min-h-screen p-6">
+      <div className="w-full max-w-md space-y-6">
+        <h1 className="text-2xl font-bold mb-2">WhatsApp Message Sender</h1>
+        <p className="text-sm text-gray-600 mb-6">
+          Enter a phone number to send a WhatsApp message to. We'll validate the number and provide details about it.
         </p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
