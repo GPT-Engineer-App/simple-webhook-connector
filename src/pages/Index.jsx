@@ -53,7 +53,7 @@ const Index = () => {
         </p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex space-x-2">
-            <div className="w-1/3">
+            <div className="w-1/4">
               <Select
                 options={countries}
                 value={countryCode}
@@ -62,7 +62,7 @@ const Index = () => {
                 isSearchable
               />
             </div>
-            <div className="w-2/3">
+            <div className="w-3/4">
               <Input
                 type="tel"
                 value={phoneNumber}
