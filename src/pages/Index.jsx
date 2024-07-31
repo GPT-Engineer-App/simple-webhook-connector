@@ -27,6 +27,10 @@ const Index = () => {
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="w-full max-w-md p-6 space-y-6">
+        <h1 className="text-2xl font-bold text-center mb-2">Phone Number Validator</h1>
+        <p className="text-sm text-gray-600 text-center mb-6">
+          Enter a phone number to check its validity and get detailed information about it.
+        </p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
             type="tel"
