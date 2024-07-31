@@ -95,7 +95,7 @@ const Index = () => {
       <div className="w-full max-w-md space-y-6 bg-white shadow-md rounded-lg p-8">
         <h1 className="text-2xl font-bold mb-2">WhatsApp Message Sender</h1>
         <p className="text-sm text-gray-600 mb-6">
-          Enter a phone number to send a WhatsApp message to. We'll validate the number and provide details about it. In order to send an assistant message, you first need to write a template message and respond to it.
+          Enter a phone number to send a WhatsApp message to. In order to send an assistant message, you first need to write a template message and respond to it.
         </p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex space-x-2">
