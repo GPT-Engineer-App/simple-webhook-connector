@@ -2,10 +2,9 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Select from 'react-select';
-import { countries } from '@/lib/countryData';
 
 const Index = () => {
-  const [countryCode, setCountryCode] = useState(countries[0]);
+  const [countryCode, setCountryCode] = useState({ value: '+49', label: '🇩🇪 Germany (+49)' });
   const [phoneNumber, setPhoneNumber] = useState('');
   const [response, setResponse] = useState(null);
 
@@ -28,6 +27,19 @@ const Index = () => {
     }
   };
 
+  const countries = [
+    { value: '+1', label: '🇺🇸 United States (+1)' },
+    { value: '+44', label: '🇬🇧 United Kingdom (+44)' },
+    { value: '+49', label: '🇩🇪 Germany (+49)' },
+    { value: '+33', label: '🇫🇷 France (+33)' },
+    { value: '+39', label: '🇮🇹 Italy (+39)' },
+    { value: '+34', label: '🇪🇸 Spain (+34)' },
+    { value: '+81', label: '🇯🇵 Japan (+81)' },
+    { value: '+86', label: '🇨🇳 China (+86)' },
+    { value: '+91', label: '🇮🇳 India (+91)' },
+    { value: '+7', label: '🇷🇺 Russia (+7)' },
+  ];
+
   const customStyles = {
     control: (provided) => ({
       ...provided,
@@ -42,6 +54,19 @@ const Index = () => {
       borderRadius: '0.375rem',
       boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
     }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected ? 'hsl(var(--primary))' : 'white',
+      color: state.isSelected ? 'white' : 'black',
+      '&:hover': {
+        backgroundColor: state.isSelected ? 'hsl(var(--primary))' : 'hsl(var(--accent))',
+      },
+    }),
+    singleValue: (provided) => ({
+      ...provided,
+      display: 'flex',
+      alignItems: 'center',
+    }),
   };
 
   return (
@@ -53,16 +78,22 @@ const Index = () => {
         </p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="flex space-x-2">
-            <div className="w-1/4">
+            <div className="w-1/3">
               <Select
                 options={countries}
                 value={countryCode}
                 onChange={setCountryCode}
                 styles={customStyles}
                 isSearchable
+                formatOptionLabel={({ label }) => (
+                  <div className="flex items-center">
+                    <span className="mr-2">{label.split(' ')[0]}</span>
+                    <span>{label.split(' ').slice(1).join(' ')}</span>
+                  </div>
+                )}
               />
             </div>
-            <div className="w-3/4">
+            <div className="w-2/3">
               <Input
                 type="tel"
                 value={phoneNumber}
