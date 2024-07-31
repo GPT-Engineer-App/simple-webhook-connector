@@ -34,6 +34,8 @@ const Index = () => {
         duration: 5000,
       });
     }
+    // Keep the phone number in the input field after submission
+    setPhoneNumber(phoneNumber);
   };
 
   const countries = [
