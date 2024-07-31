@@ -125,12 +125,11 @@ const Index = () => {
             </div>
           </div>
           <div className="mt-4">
-            <Label htmlFor="messageType">Message Type</Label>
             <ToggleGroup
               type="single"
               value={messageType}
               onValueChange={(value) => value && setMessageType(value)}
-              className="justify-start mt-2 rounded-md border border-input"
+              className="justify-start rounded-md border border-input"
             >
               <ToggleGroupItem 
                 value="template" 
