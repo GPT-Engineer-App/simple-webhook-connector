@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input"
 import Select from 'react-select';
 
 const Index = () => {
-  const [countryCode, setCountryCode] = useState({ value: '+49', label: '🇩🇪 Germany (+49)' });
+  const [countryCode, setCountryCode] = useState({ value: '+49', label: '🇩🇪 +49' });
   const [phoneNumber, setPhoneNumber] = useState('');
   const [response, setResponse] = useState(null);
 
@@ -28,16 +28,16 @@ const Index = () => {
   };
 
   const countries = [
-    { value: '+1', label: '🇺🇸 United States (+1)' },
-    { value: '+44', label: '🇬🇧 United Kingdom (+44)' },
-    { value: '+49', label: '🇩🇪 Germany (+49)' },
-    { value: '+33', label: '🇫🇷 France (+33)' },
-    { value: '+39', label: '🇮🇹 Italy (+39)' },
-    { value: '+34', label: '🇪🇸 Spain (+34)' },
-    { value: '+81', label: '🇯🇵 Japan (+81)' },
-    { value: '+86', label: '🇨🇳 China (+86)' },
-    { value: '+91', label: '🇮🇳 India (+91)' },
-    { value: '+7', label: '🇷🇺 Russia (+7)' },
+    { value: '+1', label: '🇺🇸 +1' },
+    { value: '+44', label: '🇬🇧 +44' },
+    { value: '+49', label: '🇩🇪 +49' },
+    { value: '+33', label: '🇫🇷 +33' },
+    { value: '+39', label: '🇮🇹 +39' },
+    { value: '+34', label: '🇪🇸 +34' },
+    { value: '+81', label: '🇯🇵 +81' },
+    { value: '+86', label: '🇨🇳 +86' },
+    { value: '+91', label: '🇮🇳 +91' },
+    { value: '+7', label: '🇷🇺 +7' },
   ];
 
   const customStyles = {
@@ -88,7 +88,7 @@ const Index = () => {
                 formatOptionLabel={({ label }) => (
                   <div className="flex items-center">
                     <span className="mr-2">{label.split(' ')[0]}</span>
-                    <span>{label.split(' ').slice(1).join(' ')}</span>
+                    <span>{label.split(' ')[1]}</span>
                   </div>
                 )}
               />
