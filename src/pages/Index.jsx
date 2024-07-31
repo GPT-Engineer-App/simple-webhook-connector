@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 import Select from 'react-select';
 import { toast } from "sonner"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { cn } from "@/lib/utils"
 
 const Index = () => {
   const [countryCode, setCountryCode] = useState({ value: '+49', label: '🇩🇪 +49' });
   const [phoneNumber, setPhoneNumber] = useState('');
   const [response, setResponse] = useState(null);
-  const [useTemplate, setUseTemplate] = useState(false);
-  const [useAssistant, setUseAssistant] = useState(false);
+  const [messageType, setMessageType] = useState("template");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -124,23 +124,33 @@ const Index = () => {
               />
             </div>
           </div>
-          <div className="flex justify-between items-center space-x-4 mt-4">
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="template"
-                checked={useTemplate}
-                onCheckedChange={setUseTemplate}
-              />
-              <Label htmlFor="template">Template</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Switch
-                id="assistant"
-                checked={useAssistant}
-                onCheckedChange={setUseAssistant}
-              />
-              <Label htmlFor="assistant">Assistant</Label>
-            </div>
+          <div className="mt-4">
+            <Label htmlFor="messageType">Message Type</Label>
+            <ToggleGroup
+              type="single"
+              value={messageType}
+              onValueChange={(value) => value && setMessageType(value)}
+              className="justify-start mt-2 rounded-md border border-input"
+            >
+              <ToggleGroupItem 
+                value="template" 
+                className={cn(
+                  "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
+                  messageType === "template" ? "text-primary" : "text-muted-foreground"
+                )}
+              >
+                Template
+              </ToggleGroupItem>
+              <ToggleGroupItem 
+                value="assistant" 
+                className={cn(
+                  "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
+                  messageType === "assistant" ? "text-primary" : "text-muted-foreground"
+                )}
+              >
+                Assistant
+              </ToggleGroupItem>
+            </ToggleGroup>
           </div>
           <Button type="submit" className="w-full mt-4">Submit</Button>
         </form>
