@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import Select from 'react-select';
+import { toast } from "sonner"
 
 const Index = () => {
   const [countryCode, setCountryCode] = useState({ value: '+49', label: '🇩🇪 +49' });
@@ -21,9 +22,17 @@ const Index = () => {
       });
       const data = await res.json();
       setResponse(data);
+      toast.success("Response received", {
+        description: JSON.stringify(data, null, 2),
+        duration: 5000,
+      });
     } catch (error) {
       console.error('Error:', error);
       setResponse({ error: 'An error occurred' });
+      toast.error("An error occurred", {
+        description: "Failed to send the request or receive a response.",
+        duration: 5000,
+      });
     }
   };
 
