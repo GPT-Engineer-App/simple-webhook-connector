@@ -28,9 +28,15 @@ const Index = () => {
       });
     } catch (error) {
       console.error('Error:', error);
-      setResponse({ error: error.message || 'An error occurred' });
+      let errorMessage = 'An error occurred';
+      if (error instanceof TypeError && error.message === 'Failed to fetch') {
+        errorMessage = 'Network error: Unable to reach the server. Please check your internet connection or try again later.';
+      } else {
+        errorMessage = error.message || 'Failed to send the request or receive a response.';
+      }
+      setResponse({ error: errorMessage });
       toast.error("An error occurred", {
-        description: error.message || "Failed to send the request or receive a response.",
+        description: errorMessage,
         duration: 5000,
       });
     }
