@@ -28,9 +28,9 @@ const Index = () => {
       });
     } catch (error) {
       console.error('Error:', error);
-      setResponse({ error: 'An error occurred' });
+      setResponse({ error: error.message || 'An error occurred' });
       toast.error("An error occurred", {
-        description: "Failed to send the request or receive a response.",
+        description: error.message || "Failed to send the request or receive a response.",
         duration: 5000,
       });
     }
