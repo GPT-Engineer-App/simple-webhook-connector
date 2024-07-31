@@ -18,7 +18,7 @@ const Index = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ phoneNumber: fullPhoneNumber }),
+        body: JSON.stringify({ phone_number: fullPhoneNumber }),
       });
       const data = await res.json();
       setResponse(data);
