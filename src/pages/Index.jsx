@@ -1,22 +1,21 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import Select from 'react-select';
 import { toast } from "sonner"
-import { Switch } from "@/components/ui/switch"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { cn } from "@/lib/utils"
-import { countries } from "@/lib/countryData";
 
 const Index = () => {
   const [countryCode, setCountryCode] = useState({ value: '+49', label: '🇩🇪 +49' });
   const [phoneNumber, setPhoneNumber] = useState('');
   const [response, setResponse] = useState(null);
-  const [isAssistant, setIsAssistant] = useState(false);
+  const [messageType, setMessageType] = useState("template");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const fullPhoneNumber = `${countryCode.value}${phoneNumber}`;
-    const messageType = isAssistant ? "assistant" : "template";
     try {
       const res = await fetch('https://24c6ae20-e6c8-4e33-a26d-8d3c96d82866-00-1175pigntlzx5.riker.replit.dev/first_contact', {
         method: 'POST',
@@ -52,6 +51,19 @@ const Index = () => {
     setPhoneNumber(phoneNumber);
   };
 
+  const countries = [
+    { value: '+1', label: '🇺🇸 +1' },
+    { value: '+44', label: '🇬🇧 +44' },
+    { value: '+49', label: '🇩🇪 +49' },
+    { value: '+33', label: '🇫🇷 +33' },
+    { value: '+39', label: '🇮🇹 +39' },
+    { value: '+34', label: '🇪🇸 +34' },
+    { value: '+81', label: '🇯🇵 +81' },
+    { value: '+86', label: '🇨🇳 +86' },
+    { value: '+91', label: '🇮🇳 +91' },
+    { value: '+7', label: '🇷🇺 +7' },
+  ];
+
   const customStyles = {
     control: (provided) => ({
       ...provided,
@@ -82,7 +94,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen p-6 flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen p-6 flex items-center justify-center">
       <div className="w-full max-w-md space-y-6 bg-white shadow-md rounded-lg p-8">
         <h1 className="text-2xl font-bold mb-2">WhatsApp Message Sender</h1>
         <p className="text-sm text-gray-600 mb-6">
@@ -115,23 +127,37 @@ const Index = () => {
               />
             </div>
           </div>
-          <div className="flex items-center space-x-2 mt-4">
-            <Switch
-              id="message-type"
-              checked={isAssistant}
-              onCheckedChange={setIsAssistant}
-            />
-            <label
-              htmlFor="message-type"
-              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          <div className="mt-4">
+            <ToggleGroup
+              type="single"
+              value={messageType}
+              onValueChange={(value) => value && setMessageType(value)}
+              className="justify-start rounded-md border border-input"
             >
-              {isAssistant ? "Assistant" : "Template"} Message
-            </label>
+              <ToggleGroupItem 
+                value="template" 
+                className={cn(
+                  "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
+                  messageType === "template" ? "text-primary" : "text-muted-foreground"
+                )}
+              >
+                Template
+              </ToggleGroupItem>
+              <ToggleGroupItem 
+                value="assistant" 
+                className={cn(
+                  "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
+                  messageType === "assistant" ? "text-primary" : "text-muted-foreground"
+                )}
+              >
+                Assistant
+              </ToggleGroupItem>
+            </ToggleGroup>
           </div>
-          <Button type="submit" className="w-full mt-4">Send Message</Button>
+          <Button type="submit" className="w-full mt-4">Submit</Button>
         </form>
         {response && (
-          <pre className="bg-gray-100 p-4 rounded-md overflow-auto mt-4 text-sm">
+          <pre className="bg-gray-100 p-4 rounded-md overflow-auto">
             {JSON.stringify(response, null, 2)}
           </pre>
         )}
