@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Select from 'react-select';
-import { toast } from "sonner"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { cn } from "@/lib/utils"
 
@@ -33,10 +32,6 @@ const Index = () => {
       });
       const data = await res.json();
       setResponse(data);
-      toast.success("Response received", {
-        description: JSON.stringify(data, null, 2),
-        duration: 5000,
-      });
     } catch (error) {
       console.error('Error:', error);
       let errorMessage = 'An error occurred';
@@ -46,10 +41,6 @@ const Index = () => {
         errorMessage = error.message || 'Failed to send the request or receive a response.';
       }
       setResponse({ error: errorMessage });
-      toast.error("An error occurred", {
-        description: errorMessage,
-        duration: 5000,
-      });
     }
     // Keep the phone number in the input field after submission
     setPhoneNumber(phoneNumber);
