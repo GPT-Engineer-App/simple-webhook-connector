@@ -12,6 +12,7 @@ const Index = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [response, setResponse] = useState(null);
   const [messageType, setMessageType] = useState("template");
+  const [messageStyle, setMessageStyle] = useState("professional");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,7 +25,8 @@ const Index = () => {
         },
         body: JSON.stringify({ 
           phone_number: fullPhoneNumber,
-          message_type: messageType
+          message_type: messageType,
+          message_style: messageStyle
         }),
       });
       const data = await res.json();
@@ -127,32 +129,63 @@ const Index = () => {
               />
             </div>
           </div>
-          <div className="mt-4">
-            <ToggleGroup
-              type="single"
-              value={messageType}
-              onValueChange={(value) => value && setMessageType(value)}
-              className="justify-start rounded-md border border-input"
-            >
-              <ToggleGroupItem 
-                value="template" 
-                className={cn(
-                  "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
-                  messageType === "template" ? "text-primary" : "text-muted-foreground"
-                )}
+          <div className="space-y-4">
+            <div>
+              <Label className="text-sm font-medium">Message Type</Label>
+              <ToggleGroup
+                type="single"
+                value={messageType}
+                onValueChange={(value) => value && setMessageType(value)}
+                className="justify-start rounded-md border border-input mt-1"
               >
-                Template
-              </ToggleGroupItem>
-              <ToggleGroupItem 
-                value="assistant" 
-                className={cn(
-                  "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
-                  messageType === "assistant" ? "text-primary" : "text-muted-foreground"
-                )}
+                <ToggleGroupItem 
+                  value="template" 
+                  className={cn(
+                    "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
+                    messageType === "template" ? "text-primary" : "text-muted-foreground"
+                  )}
+                >
+                  Template
+                </ToggleGroupItem>
+                <ToggleGroupItem 
+                  value="assistant" 
+                  className={cn(
+                    "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
+                    messageType === "assistant" ? "text-primary" : "text-muted-foreground"
+                  )}
+                >
+                  Assistant
+                </ToggleGroupItem>
+              </ToggleGroup>
+            </div>
+            <div>
+              <Label className="text-sm font-medium">Message Style</Label>
+              <ToggleGroup
+                type="single"
+                value={messageStyle}
+                onValueChange={(value) => value && setMessageStyle(value)}
+                className="justify-start rounded-md border border-input mt-1"
               >
-                Assistant
-              </ToggleGroupItem>
-            </ToggleGroup>
+                <ToggleGroupItem 
+                  value="professional" 
+                  className={cn(
+                    "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
+                    messageStyle === "professional" ? "text-primary" : "text-muted-foreground"
+                  )}
+                >
+                  Professional
+                </ToggleGroupItem>
+                <ToggleGroupItem 
+                  value="casual" 
+                  className={cn(
+                    "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
+                    messageStyle === "casual" ? "text-primary" : "text-muted-foreground"
+                  )}
+                >
+                  Casual
+                </ToggleGroupItem>
+              </ToggleGroup>
+            </div>
           </div>
           <Button type="submit" className="w-full mt-4">Submit</Button>
         </form>
