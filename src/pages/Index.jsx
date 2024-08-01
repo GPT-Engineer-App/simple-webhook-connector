@@ -1,21 +1,21 @@
 import { useState } from 'react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import Select from 'react-select';
 import { toast } from "sonner"
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
 
 const Index = () => {
   const [countryCode, setCountryCode] = useState({ value: '+49', label: '🇩🇪 +49' });
   const [phoneNumber, setPhoneNumber] = useState('');
   const [response, setResponse] = useState(null);
-  const [messageType, setMessageType] = useState("template");
+  const [isAssistant, setIsAssistant] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const fullPhoneNumber = `${countryCode.value}${phoneNumber}`;
+    const messageType = isAssistant ? "assistant" : "template";
     try {
       const res = await fetch('https://24c6ae20-e6c8-4e33-a26d-8d3c96d82866-00-1175pigntlzx5.riker.replit.dev/first_contact', {
         method: 'POST',
@@ -127,34 +127,20 @@ const Index = () => {
               />
             </div>
           </div>
-          <div className="mt-4">
-            <ToggleGroup
-              type="single"
-              value={messageType}
-              onValueChange={(value) => value && setMessageType(value)}
-              className="justify-start rounded-md border border-input"
+          <div className="flex items-center space-x-2 mt-4">
+            <Switch
+              id="message-type"
+              checked={isAssistant}
+              onCheckedChange={setIsAssistant}
+            />
+            <label
+              htmlFor="message-type"
+              className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
             >
-              <ToggleGroupItem 
-                value="template" 
-                className={cn(
-                  "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
-                  messageType === "template" ? "text-primary" : "text-muted-foreground"
-                )}
-              >
-                Template
-              </ToggleGroupItem>
-              <ToggleGroupItem 
-                value="assistant" 
-                className={cn(
-                  "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
-                  messageType === "assistant" ? "text-primary" : "text-muted-foreground"
-                )}
-              >
-                Assistant
-              </ToggleGroupItem>
-            </ToggleGroup>
+              {isAssistant ? "Assistant" : "Template"} Message
+            </label>
           </div>
-          <Button type="submit" className="w-full mt-4">Submit</Button>
+          <Button type="submit" className="w-full mt-4">Send Message</Button>
         </form>
         {response && (
           <pre className="bg-gray-100 p-4 rounded-md overflow-auto">
