@@ -5,6 +5,7 @@ import Select from 'react-select';
 import { toast } from "sonner"
 import { Switch } from "@/components/ui/switch"
 import { cn } from "@/lib/utils"
+import { countries } from "@/lib/countryData";
 
 const Index = () => {
   const [countryCode, setCountryCode] = useState({ value: '+49', label: '🇩🇪 +49' });
@@ -51,19 +52,6 @@ const Index = () => {
     setPhoneNumber(phoneNumber);
   };
 
-  const countries = [
-    { value: '+1', label: '🇺🇸 +1' },
-    { value: '+44', label: '🇬🇧 +44' },
-    { value: '+49', label: '🇩🇪 +49' },
-    { value: '+33', label: '🇫🇷 +33' },
-    { value: '+39', label: '🇮🇹 +39' },
-    { value: '+34', label: '🇪🇸 +34' },
-    { value: '+81', label: '🇯🇵 +81' },
-    { value: '+86', label: '🇨🇳 +86' },
-    { value: '+91', label: '🇮🇳 +91' },
-    { value: '+7', label: '🇷🇺 +7' },
-  ];
-
   const customStyles = {
     control: (provided) => ({
       ...provided,
@@ -94,7 +82,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen p-6 flex items-center justify-center">
+    <div className="min-h-screen p-6 flex items-center justify-center bg-gray-100">
       <div className="w-full max-w-md space-y-6 bg-white shadow-md rounded-lg p-8">
         <h1 className="text-2xl font-bold mb-2">WhatsApp Message Sender</h1>
         <p className="text-sm text-gray-600 mb-6">
@@ -143,7 +131,7 @@ const Index = () => {
           <Button type="submit" className="w-full mt-4">Send Message</Button>
         </form>
         {response && (
-          <pre className="bg-gray-100 p-4 rounded-md overflow-auto">
+          <pre className="bg-gray-100 p-4 rounded-md overflow-auto mt-4 text-sm">
             {JSON.stringify(response, null, 2)}
           </pre>
         )}
