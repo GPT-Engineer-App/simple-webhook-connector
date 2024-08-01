@@ -26,7 +26,7 @@ const Index = () => {
         body: JSON.stringify({ 
           phone_number: fullPhoneNumber,
           message_type: messageType,
-          message_style: messageStyle
+          message_style: messageStyle === "professional" ? "Professional & Formal" : "Friendly & Casual"
         }),
       });
       const data = await res.json();
