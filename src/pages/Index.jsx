@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Loader2 } from "lucide-react"
 import Select from 'react-select';
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { cn } from "@/lib/utils"
@@ -12,9 +13,11 @@ const Index = () => {
   const [response, setResponse] = useState(null);
   const [messageType, setMessageType] = useState("template");
   const [messageStyle, setMessageStyle] = useState("professional");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     const fullPhoneNumber = `${countryCode.value}${phoneNumber}`;
     try {
       const res = await fetch('https://24c6ae20-e6c8-4e33-a26d-8d3c96d82866-00-1175pigntlzx5.riker.replit.dev/first_contact', {
@@ -41,6 +44,8 @@ const Index = () => {
         errorMessage = error.message || 'Failed to send the request or receive a response.';
       }
       setResponse({ error: errorMessage });
+    } finally {
+      setIsLoading(false);
     }
     // Keep the phone number in the input field after submission
     setPhoneNumber(phoneNumber);
@@ -183,7 +188,16 @@ const Index = () => {
               </div>
             )}
           </div>
-          <Button type="submit" className="w-full mt-4">Submit</Button>
+          <Button type="submit" className="w-full mt-4" disabled={isLoading}>
+            {isLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Sending...
+              </>
+            ) : (
+              'Submit'
+            )}
+          </Button>
         </form>
         {response && (
           <pre className="bg-gray-100 p-4 rounded-md overflow-auto">
