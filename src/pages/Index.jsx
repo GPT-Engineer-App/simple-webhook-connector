@@ -26,7 +26,7 @@ const Index = () => {
         },
         body: JSON.stringify({ 
           phone_number: fullPhoneNumber,
-          message_type: messageType.value === "video" ? "video_message" : messageType.value,
+          message_type: messageType.value,
           ...(messageType.value === "assistant" && {
             message_style: messageStyle.value === "professional" ? "Professional & Formal" : "Friendly & Casual"
           })
