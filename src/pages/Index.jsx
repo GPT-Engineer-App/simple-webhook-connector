@@ -4,15 +4,14 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Loader2 } from "lucide-react"
 import Select from 'react-select';
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { cn } from "@/lib/utils"
 
 const Index = () => {
   const [countryCode, setCountryCode] = useState({ value: '+49', label: '🇩🇪 +49' });
   const [phoneNumber, setPhoneNumber] = useState('');
   const [response, setResponse] = useState(null);
-  const [messageType, setMessageType] = useState("template");
-  const [messageStyle, setMessageStyle] = useState("professional");
+  const [messageType, setMessageType] = useState({ value: 'template', label: 'Template' });
+  const [messageStyle, setMessageStyle] = useState({ value: 'professional', label: 'Professional' });
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -27,9 +26,9 @@ const Index = () => {
         },
         body: JSON.stringify({ 
           phone_number: fullPhoneNumber,
-          message_type: messageType,
-          ...(messageType === "assistant" && {
-            message_style: messageStyle === "professional" ? "Professional & Formal" : "Friendly & Casual"
+          message_type: messageType.value,
+          ...(messageType.value === "assistant" && {
+            message_style: messageStyle.value === "professional" ? "Professional & Formal" : "Friendly & Casual"
           })
         }),
       });
@@ -94,6 +93,17 @@ const Index = () => {
     }),
   };
 
+  const messageTypeOptions = [
+    { value: 'template', label: 'Template' },
+    { value: 'assistant', label: 'Assistant' },
+    { value: 'video', label: 'Video' },
+  ];
+
+  const messageStyleOptions = [
+    { value: 'professional', label: 'Professional' },
+    { value: 'casual', label: 'Casual' },
+  ];
+
   return (
     <div className="min-h-screen p-6 flex items-center justify-center">
       <div className="w-full max-w-md space-y-6 bg-white shadow-md rounded-lg p-8">
@@ -131,60 +141,24 @@ const Index = () => {
           <div className="space-y-4">
             <div>
               <Label className="text-sm font-medium">Message Type</Label>
-              <ToggleGroup
-                type="single"
+              <Select
+                options={messageTypeOptions}
                 value={messageType}
-                onValueChange={(value) => value && setMessageType(value)}
-                className="justify-start rounded-md border border-input mt-1"
-              >
-                <ToggleGroupItem 
-                  value="template" 
-                  className={cn(
-                    "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
-                    messageType === "template" ? "text-primary" : "text-muted-foreground"
-                  )}
-                >
-                  Template
-                </ToggleGroupItem>
-                <ToggleGroupItem 
-                  value="assistant" 
-                  className={cn(
-                    "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
-                    messageType === "assistant" ? "text-primary" : "text-muted-foreground"
-                  )}
-                >
-                  Assistant
-                </ToggleGroupItem>
-              </ToggleGroup>
+                onChange={setMessageType}
+                styles={customStyles}
+                className="mt-1"
+              />
             </div>
-            {messageType === "assistant" && (
+            {messageType.value === "assistant" && (
               <div>
                 <Label className="text-sm font-medium">Message Style</Label>
-                <ToggleGroup
-                  type="single"
+                <Select
+                  options={messageStyleOptions}
                   value={messageStyle}
-                  onValueChange={(value) => value && setMessageStyle(value)}
-                  className="justify-start rounded-md border border-input mt-1"
-                >
-                  <ToggleGroupItem 
-                    value="professional" 
-                    className={cn(
-                      "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
-                      messageStyle === "professional" ? "text-primary" : "text-muted-foreground"
-                    )}
-                  >
-                    Professional
-                  </ToggleGroupItem>
-                  <ToggleGroupItem 
-                    value="casual" 
-                    className={cn(
-                      "flex-1 rounded-none data-[state=on]:bg-white data-[state=off]:bg-gray-100",
-                      messageStyle === "casual" ? "text-primary" : "text-muted-foreground"
-                    )}
-                  >
-                    Casual
-                  </ToggleGroupItem>
-                </ToggleGroup>
+                  onChange={setMessageStyle}
+                  styles={customStyles}
+                  className="mt-1"
+                />
               </div>
             )}
           </div>
